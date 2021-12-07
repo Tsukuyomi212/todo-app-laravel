@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TodoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,8 +22,15 @@ Route::group([
 
 ], function ($router) {
     Route::post('/login', [AuthController::class, 'login']);
-    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/register', [AuthController::class, 'register']);   
+});
+
+Route::group(['middleware' => ['api', 'jwt.verify']], function($router) {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
-    Route::get('/user-profile', [AuthController::class, 'userProfile']);    
+    Route::get('/user-profile', [AuthController::class, 'userProfile']); 
+    Route::post('/todo', [TodoController::class, 'store']);
+    Route::get('/todo', [TodoController::class, 'index']);
+    Route::delete('/todo/{id}', [TodoController::class, 'destroy']);
+    Route::post('/todo/{id}', [TodoController::class, 'update']);
 });
