@@ -28,9 +28,9 @@ Route::group([
 Route::group(['middleware' => ['api', 'jwt.verify']], function($router) {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
-    Route::get('/user-profile', [AuthController::class, 'userProfile']); 
-    Route::post('/todo', [TodoController::class, 'store']);
-    Route::get('/todo', [TodoController::class, 'index']);
-    Route::delete('/todo/{id}', [TodoController::class, 'destroy']);
-    Route::post('/todo/{id}', [TodoController::class, 'update']);
+    Route::get('/me', [AuthController::class, 'userProfile']); 
+    Route::post('/todos', [TodoController::class, 'store']);
+    Route::get('/todos', [TodoController::class, 'index']);
+    Route::delete('/todos/{id}', [TodoController::class, 'destroy']);
+    Route::post('/todos/{id}', [TodoController::class, 'update']);
 });
